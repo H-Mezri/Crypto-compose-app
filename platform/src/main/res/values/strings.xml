@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Crypto</string>
+    <string name="page_detail_name">Détail</string>
+    <string name="empty_home">%s\n Oups, aucune données disponibles…\nVeuillez rafraîchir la page!</string>
+    <string name="ath">Prix haut de tous les temps:\n%s $</string>
+    <string name="price">"Prix: %s $"</string>
+
+    <!--    contentDescription-->
+    <string name="back">back</string>
+    <string name="empty_wallet_icon">empty wallet icon</string>
+    <string name="crypto_logo">crypto logo</string>
+</resources>
