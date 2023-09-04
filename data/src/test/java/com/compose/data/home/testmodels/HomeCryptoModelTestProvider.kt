@@ -1,13 +1,13 @@
 package com.compose.data.home.testmodels
 
-import com.compose.business.home.repository.HomeCryptoModelInterface
+import com.compose.data.home.model.CryptoDataModel
 
 class HomeCryptoModelTestProvider {
-    fun getHomeCryptoTestModels(size: Int, reversed: Boolean): MutableList<HomeCryptoModelInterface> {
-        val homeCryptoModels = mutableListOf<HomeCryptoModelInterface>()
+    fun getHomeCryptoTestModels(size: Int, reversed: Boolean): MutableList<CryptoDataModel> {
+        val homeCryptoModels = mutableListOf<CryptoDataModel>()
         for (i in 0..size) {
             homeCryptoModels.add(
-                HomeCryptoTestModel(
+                CryptoDataModel(
                     id = i.toString(),
                     symbol = "symbol$i",
                     name = "name$i",

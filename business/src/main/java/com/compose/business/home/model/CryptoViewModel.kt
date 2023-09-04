@@ -1,8 +1,9 @@
 package com.compose.business.home.model
 
-data class CryptoBusinessModel(
-    val id: String,
+data class CryptoViewModel(
+    val id: Int,
     val symbol: String,
+    val logo: String,
     val title: String,
     val image: String,
     val currentPrice: Double,

@@ -12,6 +12,7 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -31,14 +33,13 @@ import com.compose.platform.R
 import com.compose.platform.home.model.CryptoHomeViewElement
 import com.compose.platform.home.model.OnRefresh
 import com.compose.platform.home.ui.viewmodel.HomeViewModel
-import com.compose.platform.theme.CryptoTheme
-import com.compose.platform.theme.LocalSpacing
-import org.koin.androidx.compose.koinViewModel
+import com.compose.platform.common.theme.CryptoTheme
+import com.compose.platform.common.theme.LocalSpacing
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CreateHomeView(
-    viewModel: HomeViewModel = koinViewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToCryptoDetail: (cryptoId: String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -95,7 +96,7 @@ fun CreateEmptyHomeContent() {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            text = stringResource(id = R.string.empty_home),
+            text = stringResource(id = R.string.empty_home_page),
             textAlign = TextAlign.Center
         )
     }

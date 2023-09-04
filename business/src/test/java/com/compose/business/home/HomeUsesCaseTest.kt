@@ -4,14 +4,12 @@ import com.compose.business.common.model.AppError
 import com.compose.business.common.model.Failure
 import com.compose.business.common.model.Success
 import com.compose.business.gateway.RemoteConfigGatewayInterface
-import com.compose.business.home.mapper.CryptoBusinessModelMapper
-import com.compose.business.home.repository.HomeCryptoModelInterface
+import com.compose.business.home.mapper.CryptoViewModelMapper
+import com.compose.business.home.model.CryptoBusinessModel
 import com.compose.business.home.repository.HomeRepositoryInterface
-import com.compose.business.home.repository.RepositoryFailureInterface
-import com.compose.business.home.repository.RepositoryResponseInterface
+import com.compose.business.home.repository.RepositoryFailure
+import com.compose.business.home.repository.RepositorySuccess
 import com.compose.business.testmodels.HomeCryptoModelTestProvider
-import com.compose.business.testmodels.RepositoryFailureTestModel
-import com.compose.business.testmodels.RepositorySuccessTestModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -23,10 +21,10 @@ internal class HomeUsesCaseTest {
 
     private val homeRepository: HomeRepositoryInterface = mockk()
     private val remoteConfigGateway: RemoteConfigGatewayInterface = mockk()
-    private val cryptoBusinessModelMapper: CryptoBusinessModelMapper = CryptoBusinessModelMapper()
+    private val cryptoViewModelMapper: CryptoViewModelMapper = CryptoViewModelMapper()
 
     private val homeUsesCase =
-        HomeUsesCase(homeRepository, remoteConfigGateway, cryptoBusinessModelMapper)
+        HomeUsesCase(homeRepository, remoteConfigGateway, cryptoViewModelMapper)
 
     private val homeCryptoModelTestProvider = HomeCryptoModelTestProvider()
 
@@ -34,10 +32,9 @@ internal class HomeUsesCaseTest {
     fun GIVEN_success_repository_response_WHEN_fetchHomeDate_THEN_return_correct_result() =
         runTest {
             // given
-            val repositoryResponse: RepositoryResponseInterface<List<HomeCryptoModelInterface>> =
-                RepositorySuccessTestModel(
-                    homeCryptoModelTestProvider.getHomeCryptoTestModels(20, false)
-                )
+            val repositoryResponse = RepositorySuccess<List<CryptoBusinessModel>>(
+                homeCryptoModelTestProvider.getHomeCryptoTestModels(20, false)
+            )
             coEvery { homeRepository.fetchHomeData() } coAnswers { repositoryResponse }
             val visibleCryptoCount = 3
             every { remoteConfigGateway.homeVisibleCryptoCount } returns visibleCryptoCount
@@ -58,10 +55,9 @@ internal class HomeUsesCaseTest {
     fun GIVEN_success_repository_response_and_reversed_data_WHEN_fetchHomeDate_THEN_return_correct_result() =
         runTest {
             // given
-            val repositoryResponse: RepositoryResponseInterface<List<HomeCryptoModelInterface>> =
-                RepositorySuccessTestModel(
-                    homeCryptoModelTestProvider.getHomeCryptoTestModels(20, true)
-                )
+            val repositoryResponse = RepositorySuccess<List<CryptoBusinessModel>>(
+                homeCryptoModelTestProvider.getHomeCryptoTestModels(20, true)
+            )
             coEvery { homeRepository.fetchHomeData() } coAnswers { repositoryResponse }
             val visibleCryptoCount = 3
             every { remoteConfigGateway.homeVisibleCryptoCount } returns visibleCryptoCount
@@ -82,8 +78,8 @@ internal class HomeUsesCaseTest {
     fun GIVEN_failed_repository_response_WHEN_fetchHomeDate_THEN_return_correct_result() =
         runTest {
             // given
-            val repositoryResponse: RepositoryFailureInterface<List<HomeCryptoModelInterface>> =
-                RepositoryFailureTestModel()
+            val repositoryResponse = RepositoryFailure<List<CryptoBusinessModel>>(AppError.UNKNOWN)
+
             coEvery { homeRepository.fetchHomeData() } coAnswers { repositoryResponse }
 
             // when

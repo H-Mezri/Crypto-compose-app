@@ -1,4 +1,4 @@
-package com.compose.platform
+package com.compose.platform.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.compose.platform.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

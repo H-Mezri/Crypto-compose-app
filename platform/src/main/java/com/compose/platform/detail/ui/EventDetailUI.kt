@@ -45,7 +45,7 @@ fun CreateCryptoDetailContent(cryptoId: String) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            text = stringResource(id = R.string.empty_home, cryptoId),
+            text = stringResource(id = R.string.empty_detail_page, cryptoId),
             textAlign = TextAlign.Center
         )
     }

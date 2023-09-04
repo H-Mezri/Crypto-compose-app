@@ -1,8 +1,7 @@
 package com.compose.business.home.repository
 
-sealed interface RepositoryResponseInterface<T>
-interface RepositorySuccessInterface<T> : RepositoryResponseInterface<T> {
-    val response: T
-}
+import com.compose.business.common.model.AppError
 
-interface RepositoryFailureInterface<T> : RepositoryResponseInterface<T>
+sealed class RepositoryResponse<T>
+class RepositorySuccess<T>(val response: T) : RepositoryResponse<T>()
+class RepositoryFailure<T>(val appError: AppError) : RepositoryResponse<T>()

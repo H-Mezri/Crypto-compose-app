@@ -1,9 +1,11 @@
 package com.compose.data.home.repositroy
 
-import com.compose.data.common.RepositoryFailure
-import com.compose.data.common.RepositorySuccess
+import com.compose.business.common.model.AppError
+import com.compose.business.home.repository.RepositoryFailure
+import com.compose.business.home.repository.RepositorySuccess
 import com.compose.data.home.datasource.HomeLocalDataSource
 import com.compose.data.home.datasource.HomeRemoteDataSource
+import com.compose.data.home.mapper.toBusinessModel
 import com.compose.data.home.testmodels.HomeCryptoModelTestProvider
 import com.compose.data.remoteconfig.RemoteConfigRepository
 import io.mockk.coEvery
@@ -37,7 +39,7 @@ internal class HomeRepositoryTest {
 
         // then
         val successResponse = repositoryResponse as RepositorySuccess
-        assertEquals(localData, successResponse.response)
+        assertEquals(localData.map { it.toBusinessModel() }, successResponse.response)
         coVerify(exactly = 0) { homeRemoteDataSource.fetch(any()) }
         coVerify(exactly = 0) { homeLocalDataSource.cacheResponse(any()) }
     }
@@ -57,9 +59,9 @@ internal class HomeRepositoryTest {
 
         // then
         val successResponse = repositoryResponse as RepositorySuccess
-        assertEquals(remoteResponse, successResponse.response)
+        assertEquals(remoteResponse.map { it.toBusinessModel() }, successResponse.response)
         coVerify(exactly = 1) { homeRemoteDataSource.fetch(url) }
-        coVerify(exactly = 1) { homeLocalDataSource.cacheResponse(successResponse) }
+        coVerify(exactly = 1) { homeLocalDataSource.cacheResponse(any()) }
     }
 
     @Test
@@ -69,14 +71,15 @@ internal class HomeRepositoryTest {
         every { remoteConfigRepository.cryptoDataUrl } returns url
         every { homeLocalDataSource.data } returns null
         every { homeLocalDataSource.cacheResponse(any()) } returns Unit
-        coEvery { homeRemoteDataSource.fetch(any()) } coAnswers { RepositoryFailure() }
+        coEvery { homeRemoteDataSource.fetch(any()) } coAnswers { RepositoryFailure(AppError.UNKNOWN) }
 
         // when
         val repositoryResponse = homeRepository.fetchHomeData()
 
         // then
         assertTrue(repositoryResponse is RepositoryFailure)
+        assertEquals((repositoryResponse as RepositoryFailure).appError, AppError.UNKNOWN)
         coVerify(exactly = 1) { homeRemoteDataSource.fetch(url) }
-        coVerify(exactly = 1) { homeLocalDataSource.cacheResponse(repositoryResponse) }
+        coVerify(exactly = 0) { homeLocalDataSource.cacheResponse(any()) }
     }
 }

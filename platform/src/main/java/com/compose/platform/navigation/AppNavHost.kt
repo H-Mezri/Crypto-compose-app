@@ -1,4 +1,4 @@
-package com.compose.platform
+package com.compose.platform.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding

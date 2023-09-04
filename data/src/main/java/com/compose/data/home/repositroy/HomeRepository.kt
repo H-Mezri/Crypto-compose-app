@@ -1,26 +1,33 @@
 package com.compose.data.home.repositroy
 
-import com.compose.business.home.repository.HomeCryptoModelInterface
+import com.compose.business.gateway.RemoteConfigGatewayInterface
+import com.compose.business.home.model.CryptoBusinessModel
 import com.compose.business.home.repository.HomeRepositoryInterface
-import com.compose.business.home.repository.RepositoryResponseInterface
-import com.compose.data.common.RepositorySuccess
+import com.compose.business.home.repository.RepositoryFailure
+import com.compose.business.home.repository.RepositoryResponse
+import com.compose.business.home.repository.RepositorySuccess
 import com.compose.data.home.datasource.HomeLocalDataSource
 import com.compose.data.home.datasource.HomeRemoteDataSource
-import com.compose.data.remoteconfig.RemoteConfigRepository
+import com.compose.data.home.mapper.toBusinessModel
 
 class HomeRepository(
     private val homeRemoteDataSource: HomeRemoteDataSource,
     private val homeLocalDataSource: HomeLocalDataSource,
-    private val remoteConfigRepository: RemoteConfigRepository
+    private val remoteConfigRepository: RemoteConfigGatewayInterface
 ) : HomeRepositoryInterface {
 
-    override suspend fun fetchHomeData(): RepositoryResponseInterface<List<HomeCryptoModelInterface>> {
+    override suspend fun fetchHomeData(): RepositoryResponse<List<CryptoBusinessModel>> {
         homeLocalDataSource.data?.let { safeLocalData ->
-            return RepositorySuccess(safeLocalData)
+            return RepositorySuccess(safeLocalData.map { it.toBusinessModel() })
         }
 
-        val remoteResponse = homeRemoteDataSource.fetch(remoteConfigRepository.cryptoDataUrl)
-        homeLocalDataSource.cacheResponse(remoteResponse)
-        return remoteResponse
+        return when (val remoteResponse =
+            homeRemoteDataSource.fetch(remoteConfigRepository.cryptoDataUrl)) {
+            is RepositoryFailure -> RepositoryFailure(remoteResponse.appError)
+            is RepositorySuccess -> {
+                homeLocalDataSource.cacheResponse(remoteResponse.response)
+                RepositorySuccess(remoteResponse.response.map { it.toBusinessModel() })
+            }
+        }
     }
 }

@@ -1,10 +1,12 @@
 package com.compose.platform.home.factory
 
-import com.compose.business.home.model.CryptoBusinessModel
+import com.compose.business.home.model.CryptoViewModel
 import com.compose.platform.home.model.CryptoHomeViewElement
 
 class HomeFactory {
-    fun generateViewElements(cryptoBusinessModels: List<CryptoBusinessModel>): List<CryptoHomeViewElement> {
+    fun generateViewElements(
+        cryptoBusinessModels: List<CryptoViewModel>
+    ): List<CryptoHomeViewElement> {
         return cryptoBusinessModels.map { cryptoBusinessModel ->
             CryptoHomeViewElement(
                 cryptoBusinessModel.id,

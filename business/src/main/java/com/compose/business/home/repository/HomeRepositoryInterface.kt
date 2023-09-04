@@ -1,5 +1,7 @@
 package com.compose.business.home.repository
 
+import com.compose.business.home.model.CryptoBusinessModel
+
 interface HomeRepositoryInterface {
-    suspend fun fetchHomeData(): RepositoryResponseInterface<List<HomeCryptoModelInterface>>
+    suspend fun fetchHomeData(): RepositoryResponse<List<CryptoBusinessModel>>
 }

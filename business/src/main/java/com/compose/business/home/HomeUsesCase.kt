@@ -5,27 +5,28 @@ import com.compose.business.common.model.BusinessResponse
 import com.compose.business.common.model.Failure
 import com.compose.business.common.model.Success
 import com.compose.business.gateway.RemoteConfigGatewayInterface
-import com.compose.business.home.mapper.CryptoBusinessModelMapper
-import com.compose.business.home.model.CryptoBusinessModel
+import com.compose.business.home.mapper.CryptoViewModelMapper
+import com.compose.business.home.model.CryptoViewModel
 import com.compose.business.home.repository.HomeRepositoryInterface
-import com.compose.business.home.repository.RepositoryFailureInterface
-import com.compose.business.home.repository.RepositorySuccessInterface
+import com.compose.business.home.repository.RepositoryFailure
+import com.compose.business.home.repository.RepositorySuccess
+import javax.inject.Inject
 
-class HomeUsesCase(
+class HomeUsesCase @Inject constructor(
     private val homeRepository: HomeRepositoryInterface,
     private val remoteConfigGateway: RemoteConfigGatewayInterface,
-    private val cryptoBusinessModelMapper: CryptoBusinessModelMapper
+    private val cryptoViewModelMapper: CryptoViewModelMapper
 ) : HomeUsesCaseInterface {
 
-    override suspend fun fetchHomeData(): BusinessResponse<List<CryptoBusinessModel>> {
+    override suspend fun fetchHomeData(): BusinessResponse<List<CryptoViewModel>> {
         return when (val dataResponse = homeRepository.fetchHomeData()) {
-            is RepositorySuccessInterface -> {
+            is RepositorySuccess -> {
                 Success(dataResponse.response
                     .asSequence()
                     .sortedBy { it.marketCapRank }
                     .take(remoteConfigGateway.homeVisibleCryptoCount)
                     .map { cryptoDataModel ->
-                        cryptoBusinessModelMapper.toBusinessModel(
+                        cryptoViewModelMapper.toViewModel(
                             cryptoDataModel,
                             remoteConfigGateway.cryptoLogoUrl
                         )
@@ -33,8 +34,7 @@ class HomeUsesCase(
                     .toList()
                 )
             }
-
-            is RepositoryFailureInterface -> Failure(AppError.UNKNOWN)
+            is RepositoryFailure -> Failure(dataResponse.appError)
         }
     }
 }

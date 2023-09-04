@@ -1,16 +1,16 @@
 package com.compose.business.testmodels
 
-import com.compose.business.home.repository.HomeCryptoModelInterface
+import com.compose.business.home.model.CryptoBusinessModel
 
 class HomeCryptoModelTestProvider {
-    fun getHomeCryptoTestModels(size: Int, reversed: Boolean): MutableList<HomeCryptoModelInterface> {
-        val homeCryptoModels = mutableListOf<HomeCryptoModelInterface>()
+    fun getHomeCryptoTestModels(size: Int, reversed: Boolean): MutableList<CryptoBusinessModel> {
+        val homeCryptoModels = mutableListOf<CryptoBusinessModel>()
         for (i in 0..size) {
             homeCryptoModels.add(
-                HomeCryptoTestModel(
+                CryptoBusinessModel(
                     id = i.toString(),
                     symbol = "symbol$i",
-                    name = "name$i",
+                    title = "title$i",
                     image = "",
                     currentPrice = 1.0 * i,
                     marketCap = 10.0 * i,

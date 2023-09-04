@@ -1,8 +1,8 @@
 package com.compose.data.home.datasource
 
-import com.compose.data.common.RepositoryFailure
-import com.compose.data.common.RepositorySuccess
-import com.compose.data.home.model.HomeCryptoModel
+import com.compose.business.home.repository.RepositoryFailure
+import com.compose.business.home.repository.RepositorySuccess
+import com.compose.data.home.model.CryptoDataModel
 import com.compose.data.home.testmodels.HomeCryptoModelTestProvider
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -26,7 +26,10 @@ internal class HomeRemoteDataSourceTest {
         // given
         val url = "www.exempleurl.fr"
         val homeCryptoList =
-            homeCryptoModelTestProvider.getHomeCryptoTestModels(5, false) as List<HomeCryptoModel>
+            homeCryptoModelTestProvider.getHomeCryptoTestModels(
+                5,
+                false
+            ) as List<CryptoDataModel>
         coEvery { homeDataApi.fetch(url) } returns Response.success(homeCryptoList)
 
         // when
