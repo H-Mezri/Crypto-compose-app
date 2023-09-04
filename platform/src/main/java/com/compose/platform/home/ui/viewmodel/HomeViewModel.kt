@@ -75,7 +75,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.update { currentState ->
                         currentState.copy(
                             cryptoHomeViewElements = emptyList(),
-                            error = response.result,
+                            error = response.error,
                             isRefreshing = false
                         )
                     }

@@ -87,6 +87,6 @@ internal class HomeUsesCaseTest {
 
             // then
             val failureResult = result as Failure
-            assertEquals(AppError.UNKNOWN, failureResult.result)
+            assertEquals(AppError.UNKNOWN, failureResult.error)
         }
 }
