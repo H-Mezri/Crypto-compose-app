@@ -1,6 +1,7 @@
-package com.compose.platform
+package com.compose.platform.navigation
 
 import androidx.annotation.StringRes
+import com.compose.platform.R
 
 /**
  * enum values that represent the screens in the app
