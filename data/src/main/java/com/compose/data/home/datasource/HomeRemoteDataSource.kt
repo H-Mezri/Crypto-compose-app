@@ -1,5 +1,6 @@
 package com.compose.data.home.datasource
 
+import com.compose.business.common.model.AppError
 import com.compose.business.home.repository.HomeCryptoModelInterface
 import com.compose.business.home.repository.RepositoryResponseInterface
 import com.compose.data.common.RepositoryFailure
@@ -14,14 +15,14 @@ class HomeRemoteDataSource(private val homeDataApi: HomeDataApi) {
                 homeResponse.isSuccessful -> {
                     homeResponse.body()?.let { safeResponseBody ->
                         RepositorySuccess(safeResponseBody)
-                    } ?: run { RepositoryFailure() }
+                    } ?: run { RepositoryFailure(AppError.EMPTY_RESPONSE) }
                 }
                 else -> {
-                    RepositoryFailure()
+                    RepositoryFailure(AppError.NETWORK_ERROR)
                 }
             }
         } catch (e: Exception) {
-            RepositoryFailure()
+            RepositoryFailure(AppError.UNKNOWN)
         }
     }
 }

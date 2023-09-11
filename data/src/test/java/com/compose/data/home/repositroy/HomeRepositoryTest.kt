@@ -1,5 +1,6 @@
 package com.compose.data.home.repositroy
 
+import com.compose.business.common.model.AppError
 import com.compose.data.common.RepositoryFailure
 import com.compose.data.common.RepositorySuccess
 import com.compose.data.home.datasource.HomeLocalDataSource
@@ -69,13 +70,14 @@ internal class HomeRepositoryTest {
         every { remoteConfigRepository.cryptoDataUrl } returns url
         every { homeLocalDataSource.data } returns null
         every { homeLocalDataSource.cacheResponse(any()) } returns Unit
-        coEvery { homeRemoteDataSource.fetch(any()) } coAnswers { RepositoryFailure() }
+        coEvery { homeRemoteDataSource.fetch(any()) } coAnswers { RepositoryFailure(AppError.EMPTY_RESPONSE) }
 
         // when
         val repositoryResponse = homeRepository.fetchHomeData()
 
         // then
         assertTrue(repositoryResponse is RepositoryFailure)
+        assertEquals(AppError.EMPTY_RESPONSE, (repositoryResponse as RepositoryFailure).error)
         coVerify(exactly = 1) { homeRemoteDataSource.fetch(url) }
         coVerify(exactly = 1) { homeLocalDataSource.cacheResponse(repositoryResponse) }
     }

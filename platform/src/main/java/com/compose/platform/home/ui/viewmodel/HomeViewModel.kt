@@ -2,9 +2,9 @@ package com.compose.platform.home.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.compose.business.home.HomeUsesCaseInterface
 import com.compose.business.common.model.Failure
 import com.compose.business.common.model.Success
+import com.compose.business.home.HomeUsesCaseInterface
 import com.compose.platform.home.factory.HomeFactory
 import com.compose.platform.home.model.HomeViewState
 import com.compose.platform.home.model.OnPause
@@ -15,7 +15,6 @@ import com.compose.platform.home.model.OnStop
 import com.compose.platform.home.model.ViewModelAction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -73,7 +72,7 @@ class HomeViewModel(
                     _uiState.update { currentState ->
                         currentState.copy(
                             cryptoHomeViewElements = emptyList(),
-                            error = response.result,
+                            error = response.error,
                             isRefreshing = false
                         )
                     }
