@@ -1,0 +1,57 @@
+[versions]
+android-core-ktx-ver = "1.10.0"
+android-navigation-runtime-ver = "2.6.0"
+android-lifecycle-ver = "2.4.0"
+android-lifecycle-runtime-compose-ver = "2.6.1"
+android-activity-compose-ver = "1.7.2"
+android-navigation-compose-ver = "2.6.0"
+android-compose-ui-ver = "1.4.3"
+android-compose-material-ver = "1.6.0-alpha01"
+android-compose-material3-ver = "1.1.1"
+retrofit-ver = "2.9.0"
+hilt-ver = "2.44"
+hilt-navigation-compose-ver = "1.0.0"
+coroutines-core-ver = "1.7.1"
+gson-ver = "2.10.1"
+glide-compose-ver = "1.0.0-alpha.1"
+javax-inject-ver = "1"
+
+junit-test-ver = "4.13.2"
+kotlin-coroutines-test-ver = "1.7.3"
+junit-android-test-ver = "1.1.3"
+espresso-test-ver = "3.4.0"
+mockk-test-ver = "1.13.5"
+
+[libraries]
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "android-core-ktx-ver" }
+navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "android-navigation-runtime-ver" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "android-lifecycle-ver" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "android-lifecycle-ver" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "android-lifecycle-runtime-compose-ver" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "android-activity-compose-ver" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "android-navigation-compose-ver" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "android-compose-ui-ver" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "android-compose-ui-ver" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "android-compose-ui-ver" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "android-compose-material-ver" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "android-compose-material3-ver" }
+glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose-ver" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit-ver" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit-ver" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-ver" }
+hilt-kapt = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt-ver" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose-ver" }
+javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject-ver" }
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines-core-ver" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson-ver" }
+
+test-junit = { group = "junit", name = "junit", version.ref = "junit-test-ver" }
+test-kolin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlin-coroutines-test-ver" }
+test-junit-android = { group = "androidx.test.ext", name = "junit", version.ref = "junit-android-test-ver" }
+test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-test-ver" }
+test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk-test-ver" }
+test-junit-compose = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "android-compose-ui-ver" }
+debug-ui-tooling-compose = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "android-compose-ui-ver" }
+debug-ui-test-manifest-compose = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "android-compose-ui-ver" }
+
+[plugins]
